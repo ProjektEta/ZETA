@@ -75,6 +75,13 @@ def ClearHistory(user_id):
 
     return
 
+async def DownloadHistory(user_id):
+    
+    if path.isfile("CHAT_HISTORY/" + str(user_id)) is False:
+        return None
+
+    return open("CHAT_HISTORY/" + str(user_id), 'w')
+
 
 if __name__ == "__main__":
     main()
