@@ -53,7 +53,21 @@ async def clearhistory(interaction: discord.Interaction):
     main.ClearHistory(interaction.user.id)
     await interaction.response.send_message("Cleared History!")
 
+@bot.tree.command(
+    name="download",
+    description="Download a history file!"
+)
+@app_commands.describe(historyid = "History you want to download!")
+async def download(interaction: discord.Interaction, historyid: int):
+    ## interaction.message.author.id
+    channel_id = interaction.channel
 
+    response = await main.DownloadHistory(historyid)
+
+    if response != None:
+        await channel_id.send(file=discord.file(response))
+    else:
+        await channel_id.send("No history avaliable")
 
 
 
