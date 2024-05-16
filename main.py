@@ -82,6 +82,8 @@ async def DownloadHistory(user_id):
 
     return open("CHAT_HISTORY/" + str(user_id), 'w')
 
+def UploadData():
+    return
 
 if __name__ == "__main__":
     main()
