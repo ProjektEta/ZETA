@@ -37,53 +37,5 @@ def main():
 
     return 0
 
-def ChatMessage(user_message, user_mode, user_id):
-    saved_messages = []
-
-    if path.isfile("CHAT_HISTORY/" + str(user_id)) is False:
-        return "Sorry! But you do not have previous chat history please use the createhistory command first!"
-    
-    with open("CHAT_HISTORY/" + str(user_id)) as fp:
-        saved_messages = json.load(fp)
-
-    saved_messages.append({'role': user_mode, 'content': user_message})
-    response = ollama.chat(model="zeta-llama3", messages=saved_messages, stream=False)
-    saved_messages.append({'role': 'assistant', 'content': response['message']['content']})
-
-    with open("CHAT_HISTORY/" + str(user_id), 'w') as json_file:
-        json.dump(saved_messages, json_file, indent=4, separators=(',', ': '))
-
-    return response['message']['content']
-
-def CreateHistory(user_id):
-
-    if path.isfile("CHAT_HISTORY/" + str(user_id)) is True:
-        return "Sorry! But you do have previous chat history please use the clearhistory command if you want to start a new chat!" 
-
-    default = []
-    f = open("CHAT_HISTORY/" + str(user_id), 'w')
-
-    with open("CHAT_HISTORY/" + str(user_id), 'w') as json_file:
-        json.dump(default, json_file, indent=4, separators=(",", ": "))
-
-    return
-    
-def ClearHistory(user_id):
-
-    if path.exists("CHAT_HISTORY/" + str(user_id)):
-        os.remove("CHAT_HISTORY/" + str(user_id))
-
-    return
-
-async def DownloadHistory(user_id):
-    
-    if path.isfile("CHAT_HISTORY/" + str(user_id)) is False:
-        return None
-
-    return open("CHAT_HISTORY/" + str(user_id), 'w')
-
-def UploadData():
-    return
-
 if __name__ == "__main__":
     main()
